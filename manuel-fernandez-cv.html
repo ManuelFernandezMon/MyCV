@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manuel Fernández — Cybersecurity Track</title>
+<style>
+  :root{
+    --navy:#0b1f33;
+    --navy-deep:#071420;
+    --teal:#2dd4bf;
+    --teal-dim:#1f8f82;
+    --ice:#e7f1f1;
+    --paper:#f6f7f5;
+    --ink:#16252f;
+    --line:rgba(45,212,191,0.25);
+    --mono: "IBM Plex Mono", "Courier New", monospace;
+    --sans: "Inter", "Helvetica Neue", Arial, sans-serif;
+    --serif: "Source Serif Pro", Georgia, serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.5;
+  }
+  a{color:var(--teal-dim); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  :focus-visible{outline:2px solid var(--teal); outline-offset:3px;}
+
+  .container{max-width:1040px; margin:0 auto; padding:0 28px;}
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    background:
+      radial-gradient(circle at 18% 20%, rgba(45,212,191,0.12), transparent 45%),
+      linear-gradient(180deg, var(--navy-deep), var(--navy));
+    color:var(--ice);
+    padding:88px 0 64px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap:48px;
+    align-items:center;
+  }
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12.5px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--teal);
+    margin:0 0 18px;
+  }
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:clamp(2.4rem, 4vw, 3.4rem);
+    line-height:1.08;
+    margin:0 0 16px;
+    letter-spacing:-0.01em;
+  }
+  .hero p.lede{
+    font-size:1.05rem;
+    color:#c9d8d8;
+    max-width:46ch;
+    margin:0 0 28px;
+  }
+  .hero-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:18px;
+    font-family:var(--mono);
+    font-size:13px;
+    color:#9fb6b6;
+  }
+  .hero-meta span{display:flex; gap:8px; align-items:baseline;}
+  .hero-meta b{color:var(--ice); font-weight:600;}
+
+  /* signature element: live "active enrollment" status panel */
+  .status-panel{
+    background: linear-gradient(165deg, rgba(11,31,51,0.9), rgba(7,20,32,0.95));
+    border:1px solid rgba(45,212,191,0.3);
+    border-radius:10px;
+    padding:18px 18px 14px;
+    max-width:360px;
+    margin:0 auto;
+    box-shadow:0 18px 40px -12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04);
+  }
+  .panel-head{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.06em;
+    color:#7a9090;
+    padding-bottom:12px;
+    margin-bottom:12px;
+    border-bottom:1px solid rgba(45,212,191,0.18);
+  }
+  .panel-head .dot{
+    width:8px; height:8px; border-radius:50%;
+    background:var(--teal);
+    box-shadow:0 0 0 0 rgba(45,212,191,0.6);
+    animation:pulseDot 2.2s ease-in-out infinite;
+  }
+  @keyframes pulseDot{
+    0%,100%{box-shadow:0 0 0 0 rgba(45,212,191,0.45);}
+    50%{box-shadow:0 0 0 6px rgba(45,212,191,0);}
+  }
+  .panel-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:10px 0;
+  }
+  .panel-row + .panel-row{border-top:1px solid rgba(255,255,255,0.05);}
+  .ping{
+    width:7px; height:7px; border-radius:50%;
+    background:var(--teal);
+    flex-shrink:0;
+    box-shadow:0 0 8px 1px rgba(45,212,191,0.7);
+  }
+  .panel-text{display:flex; flex-direction:column; flex-grow:1; min-width:0;}
+  .inst-name{
+    font-family:var(--mono);
+    font-weight:700;
+    font-size:13px;
+    color:var(--ice);
+    letter-spacing:0.03em;
+  }
+  .inst-prog{
+    font-size:11.5px;
+    color:#8fa6a6;
+    margin-top:1px;
+  }
+  .panel-term{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--teal);
+    background:rgba(45,212,191,0.1);
+    border:1px solid rgba(45,212,191,0.3);
+    border-radius:4px;
+    padding:3px 7px;
+    flex-shrink:0;
+  }
+  .panel-foot{
+    margin-top:10px;
+    padding-top:10px;
+    border-top:1px solid rgba(45,212,191,0.18);
+    font-family:var(--mono);
+    font-size:10.5px;
+    color:#5d7070;
+    text-align:center;
+    letter-spacing:0.04em;
+  }
+
+  /* ---------- NAV ---------- */
+  nav.subnav{
+    background:var(--navy-deep);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    position:sticky; top:0; z-index:10;
+  }
+  nav.subnav .container{
+    display:flex;
+    gap:26px;
+    overflow-x:auto;
+    padding-top:14px;
+    padding-bottom:14px;
+  }
+  nav.subnav a{
+    color:#9fb6b6;
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    white-space:nowrap;
+  }
+  nav.subnav a:hover{color:var(--teal); text-decoration:none;}
+
+  /* ---------- SECTIONS ---------- */
+  main section{
+    padding:64px 0;
+    border-bottom:1px solid #e1e6e2;
+  }
+  main section:last-of-type{border-bottom:none;}
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin-bottom:32px;
+  }
+  .section-head .tag{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--teal-dim);
+    letter-spacing:0.14em;
+    border:1px solid var(--teal-dim);
+    border-radius:3px;
+    padding:3px 8px;
+  }
+  .section-head h2{
+    font-family:var(--serif);
+    font-size:1.6rem;
+    margin:0;
+    color:var(--navy);
+  }
+
+  /* Summary */
+  .summary-text{
+    font-size:1.05rem;
+    max-width:68ch;
+    color:#2c3d40;
+  }
+  .summary-text strong{color:var(--navy);}
+
+  /* Education timeline — three concurrent tracks, not sequential, so shown as parallel lanes */
+  .lanes{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap:18px;
+  }
+  .lane{
+    display:grid;
+    grid-template-columns: 160px 1fr 110px;
+    gap:18px;
+    align-items:start;
+    background:#fff;
+    border:1px solid #e1e6e2;
+    border-left:3px solid var(--teal);
+    border-radius:6px;
+    padding:18px 20px;
+  }
+  .lane .inst{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--navy);
+    font-weight:700;
+    letter-spacing:0.02em;
+  }
+  .lane .inst small{display:block; font-weight:400; color:#5d7070; font-size:11px; margin-top:4px;}
+  .lane .prog h3{margin:0 0 4px; font-size:1rem; color:var(--ink);}
+  .lane .prog p{margin:0; font-size:0.92rem; color:#5d7070;}
+  .lane .span{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--teal-dim);
+    text-align:right;
+    white-space:nowrap;
+  }
+
+  /* Experience */
+  .job{
+    background:#fff;
+    border:1px solid #e1e6e2;
+    border-radius:6px;
+    padding:22px 24px;
+  }
+  .job-head{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:10px;
+  }
+  .job-head h3{margin:0; font-size:1.1rem; color:var(--navy);}
+  .job-head .role{font-family:var(--mono); font-size:12px; color:var(--teal-dim);}
+  ul.job-tasks{margin:10px 0 0; padding-left:20px; color:#2c3d40;}
+  ul.job-tasks li{margin-bottom:6px;}
+
+  /* Skills */
+  .skills-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+    gap:22px;
+  }
+  .skill-cat h3{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--teal-dim);
+    margin:0 0 12px;
+  }
+  .chip-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{
+    background:var(--navy);
+    color:var(--ice);
+    font-family:var(--mono);
+    font-size:12px;
+    padding:6px 11px;
+    border-radius:14px;
+  }
+
+  /* Projects */
+  .projects-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+    gap:20px;
+  }
+  .proj-card{
+    background:#fff;
+    border:1px solid #e1e6e2;
+    border-radius:6px;
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .proj-card .status{
+    font-family:var(--mono);
+    font-size:10.5px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--teal-dim);
+    align-self:flex-start;
+    border:1px solid var(--teal-dim);
+    border-radius:3px;
+    padding:2px 7px;
+  }
+  .proj-card h3{margin:0; font-size:1.05rem; color:var(--navy);}
+  .proj-card p{margin:0; font-size:0.92rem; color:#5d7070; flex-grow:1;}
+  .proj-card .stack{font-family:var(--mono); font-size:11px; color:#7a9090;}
+
+  /* Certifications */
+  .cert-list{display:flex; flex-direction:column; gap:14px;}
+  .cert-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    border-bottom:1px dashed #d6dcd6;
+    padding-bottom:10px;
+  }
+  .cert-row .name{font-weight:600; color:var(--navy);}
+  .cert-row .meta{font-family:var(--mono); font-size:12px; color:#7a9090;}
+
+  /* Languages */
+  .lang-grid{display:flex; gap:28px; flex-wrap:wrap;}
+  .lang-item{min-width:160px;}
+  .lang-item .name{font-weight:600; color:var(--navy); margin-bottom:6px;}
+  .meter{height:6px; background:#e1e6e2; border-radius:4px; overflow:hidden;}
+  .meter span{display:block; height:100%; background:var(--teal);}
+  .lang-item .level{font-family:var(--mono); font-size:11px; color:#7a9090; margin-top:6px;}
+
+  /* Contact */
+  footer.contact{
+    background:var(--navy-deep);
+    color:var(--ice);
+    padding:56px 0 40px;
+  }
+  footer.contact h2{font-family:var(--serif); font-size:1.5rem; margin:0 0 22px;}
+  .contact-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(200px,1fr));
+    gap:18px;
+  }
+  .contact-item{
+    font-family:var(--mono);
+    font-size:13px;
+    color:#c9d8d8;
+  }
+  .contact-item .label{display:block; color:var(--teal); font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:5px;}
+  .contact-item a{color:#e7f1f1;}
+  footer .foot-note{margin-top:40px; font-family:var(--mono); font-size:11px; color:#5d7070;}
+
+  @media (max-width: 760px){
+    .hero-grid{grid-template-columns:1fr;}
+    .status-panel{max-width:100%;}
+    .lane{grid-template-columns:1fr; gap:8px;}
+    .lane .span{text-align:left;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container hero-grid">
+    <div>
+      <p class="eyebrow">Cybersecurity Track // Panamá</p>
+      <h1>Manuel Fernández</h1>
+      <p class="lede">Construction professional building a parallel path into cybersecurity — running three concurrent academic tracks (ITSE, UTP, UEM) while applying networking and security fundamentals to real projects.</p>
+      <div class="hero-meta">
+        <span>📍 <b>Panamá</b></span>
+        <span>✉️ <b>manifernandez2205@gmail.com</b></span>
+        <span>☎ <b>6171-6908</b></span>
+      </div>
+    </div>
+    <div class="status-panel" aria-label="Panel de instituciones académicas en curso simultáneo">
+      <div class="panel-head">
+        <span class="dot"></span>
+        <span>ACTIVE_ENROLLMENT.log</span>
+      </div>
+      <div class="panel-row">
+        <span class="ping"></span>
+        <div class="panel-text">
+          <span class="inst-name">ITSE</span>
+          <span class="inst-prog">Técnico en Ciberseguridad</span>
+        </div>
+        <span class="panel-term">26–28</span>
+      </div>
+      <div class="panel-row">
+        <span class="ping"></span>
+        <div class="panel-text">
+          <span class="inst-name">UTP</span>
+          <span class="inst-prog">Curso CCNA</span>
+        </div>
+        <span class="panel-term">26–27</span>
+      </div>
+      <div class="panel-row">
+        <span class="ping"></span>
+        <div class="panel-text">
+          <span class="inst-name">UEM</span>
+          <span class="inst-prog">Ingeniería en Ciberseguridad</span>
+        </div>
+        <span class="panel-term">24–28</span>
+      </div>
+      <div class="panel-foot">3 tracks running concurrently</div>
+    </div>
+  </div>
+</header>
+
+<nav class="subnav">
+  <div class="container">
+    <a href="#summary">Resumen</a>
+    <a href="#education">Educación</a>
+    <a href="#experience">Experiencia</a>
+    <a href="#skills">Habilidades</a>
+    <a href="#projects">Proyectos</a>
+    <a href="#certs">Certificaciones</a>
+    <a href="#languages">Idiomas</a>
+    <a href="#contact">Contacto</a>
+  </div>
+</nav>
+
+<main>
+
+  <section id="summary">
+    <div class="container">
+      <div class="section-head"><span class="tag">01</span><h2>Resumen</h2></div>
+      <p class="summary-text">
+        Profesional con experiencia operativa en el sector construcción, actualmente cursando <strong>tres rutas académicas en paralelo</strong>: el Técnico en Ciberseguridad en ITSE, el curso CCNA en UTP, y la Ingeniería en Ciberseguridad en línea en UEM. Combina conocimientos prácticos de redes (Wireshark, Packet Tracer, Active Directory/GPO) con proyectos propios de desarrollo — desde sistemas de asistencia QR hasta comparadores de precios — para construir una base técnica sólida orientada a seguridad informática.
+      </p>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="container">
+      <div class="section-head"><span class="tag">02</span><h2>Educación — rutas simultáneas</h2></div>
+      <div class="lanes">
+        <div class="lane">
+          <div class="inst">ITSE<small>Instituto Técnico Superior Especializado</small></div>
+          <div class="prog">
+            <h3>Técnico en Ciberseguridad</h3>
+            <p>Programa técnico enfocado en fundamentos de hardware/software, sistemas operativos, redes y seguridad. Cursando II Cuatrimestre 2026, grupo 1-3.</p>
+          </div>
+          <div class="span">2026 – 2028</div>
+        </div>
+        <div class="lane">
+          <div class="inst">UTP<small>Universidad Tecnológica de Panamá</small></div>
+          <div class="prog">
+            <h3>Curso CCNA (Cisco Certified Network Associate)</h3>
+            <p>Formación en fundamentos de redes Cisco: direccionamiento IP, modelos OSI/TCP-IP, switching y routing.</p>
+          </div>
+          <div class="span">2026 – 2027</div>
+        </div>
+        <div class="lane">
+          <div class="inst">UEM<small>Universidad Europea del Atlántico (modalidad online)</small></div>
+          <div class="prog">
+            <h3>Ingeniería en Ciberseguridad</h3>
+            <p>Programa universitario en línea con enfoque integral en seguridad informática, complementando la formación técnica con base de ingeniería.</p>
+          </div>
+          <div class="span">2024 – 2028</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="container">
+      <div class="section-head"><span class="tag">03</span><h2>Experiencia</h2></div>
+      <div class="job">
+        <div class="job-head">
+          <h3>Aplipol S.A.</h3>
+          <span class="role">Trabajador / Worker</span>
+        </div>
+        <ul class="job-tasks">
+          <li>Apoyo operativo en proyectos de construcción, coordinando tareas en sitio.</li>
+          <li>Implementó un sistema propio de control de asistencia por código QR para el seguimiento del personal en obra (ver Proyectos).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="container">
+      <div class="section-head"><span class="tag">04</span><h2>Habilidades</h2></div>
+      <div class="skills-grid">
+        <div class="skill-cat">
+          <h3>Redes</h3>
+          <div class="chip-row">
+            <span class="chip">Wireshark</span>
+            <span class="chip">Packet Tracer</span>
+            <span class="chip">Modelo OSI/TCP-IP</span>
+            <span class="chip">Direccionamiento IPv4</span>
+            <span class="chip">DNS</span>
+            <span class="chip">ARP</span>
+          </div>
+        </div>
+        <div class="skill-cat">
+          <h3>Sistemas & Seguridad</h3>
+          <div class="chip-row">
+            <span class="chip">Active Directory</span>
+            <span class="chip">Group Policy (GPO)</span>
+            <span class="chip">Windows Server 2022</span>
+            <span class="chip">VirtualBox</span>
+            <span class="chip">Linux (fundamentos)</span>
+          </div>
+        </div>
+        <div class="skill-cat">
+          <h3>Desarrollo</h3>
+          <div class="chip-row">
+            <span class="chip">HTML / CSS / JS</span>
+            <span class="chip">Node.js</span>
+            <span class="chip">Next.js</span>
+            <span class="chip">Supabase</span>
+            <span class="chip">Python</span>
+          </div>
+        </div>
+        <div class="skill-cat">
+          <h3>Herramientas</h3>
+          <div class="chip-row">
+            <span class="chip">Obsidian</span>
+            <span class="chip">Google Apps Script</span>
+            <span class="chip">Vercel</span>
+            <span class="chip">GitHub</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="container">
+      <div class="section-head"><span class="tag">05</span><h2>Proyectos</h2></div>
+      <div class="projects-grid">
+        <div class="proj-card">
+          <span class="status">En producción</span>
+          <h3>Sistema de Asistencia QR</h3>
+          <p>Control de asistencia para personal de construcción mediante código QR, con verificación GPS, captura de selfie, autenticación por PIN y panel administrativo multi-proyecto.</p>
+          <span class="stack">HTML/JS · Google Apps Script · Supabase · Vercel</span>
+        </div>
+        <div class="proj-card">
+          <span class="status">Diseño / desarrollo</span>
+          <h3>Comparador de Precios de Supermercados</h3>
+          <p>Aplicación full-stack para comparar precios entre supermercados de Panamá (Super 99, El Rey, Riba Smith, El Machetazo, Xtra) mediante scraping automatizado diario.</p>
+          <span class="stack">Next.js · Supabase · Python + Playwright</span>
+        </div>
+        <div class="proj-card">
+          <span class="status">Desplegado</span>
+          <h3>Test de CI Interactivo</h3>
+          <p>Test clásico de 50 preguntas (razonamiento lógico, numérico y verbal) con temporizador de 30 minutos, envío automático y reporte de resultados.</p>
+          <span class="stack">HTML/JS · Vercel</span>
+        </div>
+        <div class="proj-card">
+          <span class="status">Sistema de estudio</span>
+          <h3>Vault ITSE en Obsidian</h3>
+          <p>Base de conocimiento con más de 70 archivos organizados en 10 módulos, sincronizada vía GitHub, con diagramas ASCII y visuales en Excalidraw.</p>
+          <span class="stack">Obsidian · GitHub Sync · Excalidraw · Dataview</span>
+        </div>
+        <div class="proj-card">
+          <span class="status">En desarrollo</span>
+          <h3>Perfio</h3>
+          <p>Buscador y localizador de perfumes — plataforma para encontrar y comparar fragancias disponibles cerca del usuario.</p>
+          <span class="stack">En desarrollo</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="certs">
+    <div class="container">
+      <div class="section-head"><span class="tag">06</span><h2>Certificaciones & Formación complementaria</h2></div>
+      <div class="cert-list">
+        <div class="cert-row">
+          <span class="name">Introduction to Cybersecurity</span>
+          <span class="meta">Cisco Networking Academy · Oct 2023 · 6 h</span>
+        </div>
+        <div class="cert-row">
+          <span class="name">Conceptos Básicos de Hardware de Computadora</span>
+          <span class="meta">ITSE · Cisco Networking Academy · Jun 2026 · 6 h</span>
+        </div>
+        <div class="cert-row">
+          <span class="name">Introducción a Cisco Packet Tracer</span>
+          <span class="meta">ITSE · Cisco Networking Academy · May 2026</span>
+        </div>
+        <div class="cert-row">
+          <span class="name">Taller #1 — Active Directory & GPO (Windows Server 2022)</span>
+          <span class="meta">ITSE · 2026</span>
+        </div>
+        <div class="cert-row">
+          <span class="name">Curso CCNA — fundamentos de redes Cisco</span>
+          <span class="meta">UTP · en curso, 2026–2027</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="languages">
+    <div class="container">
+      <div class="section-head"><span class="tag">07</span><h2>Idiomas</h2></div>
+      <div class="lang-grid">
+        <div class="lang-item">
+          <div class="name">Español</div>
+          <div class="meter"><span style="width:100%"></span></div>
+          <div class="level">Nativo</div>
+        </div>
+        <div class="lang-item">
+          <div class="name">Inglés</div>
+          <div class="meter"><span style="width:90%"></span></div>
+          <div class="level">Fluido / proficiente</div>
+        </div>
+        <div class="lang-item">
+          <div class="name">Francés</div>
+          <div class="meter"><span style="width:55%"></span></div>
+          <div class="level">Intermedio</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="contact" id="contact">
+  <div class="container">
+    <h2>Contacto</h2>
+    <div class="contact-grid">
+      <div class="contact-item">
+        <span class="label">Email</span>
+        <a href="mailto:manifernandez2205@gmail.com">manifernandez2205@gmail.com</a>
+      </div>
+      <div class="contact-item">
+        <span class="label">Teléfono</span>
+        <a href="tel:+50761716908">+507 6171-6908</a>
+      </div>
+      <div class="contact-item">
+        <span class="label">Ubicación</span>
+        <span>Panamá</span>
+      </div>
+      <div class="contact-item">
+        <span class="label">LinkedIn</span>
+        <a href="https://www.linkedin.com/in/manuel-fernandez-mon-b12963252" target="_blank" rel="noopener">manuel-fernandez-mon</a>
+      </div>
+    </div>
+    <p class="foot-note">Tres instituciones, una sola ruta hacia ciberseguridad.</p>
+  </div>
+</footer>
+
+</body>
+</html>
